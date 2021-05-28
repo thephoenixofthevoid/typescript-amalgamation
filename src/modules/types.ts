@@ -8615,11 +8615,16 @@ export interface EmitHelperFactory {
         shortOptionNames: ESMap<string, string>;
     }
 
+    interface BuilderStateFileInfo {
+        readonly version: string;
+        signature: string | undefined;
+        affectsGlobalScope: boolean | undefined;
+    }
 
     export type ProgramBuildInfoDiagnostic = number | [fileId: number, diagnostics: readonly ReusableDiagnostic[]];
     export type ProgramBuilderInfoFilePendingEmit = [fileId: number, emitKind: BuilderFileEmit];
     export type ProgramBuildInfoReferencedMap = [fileId: number, fileIdListId: number][];
-    export type ProgramBuildInfoBuilderStateFileInfo = Omit<BuilderState.FileInfo, "signature"> & {
+    export type ProgramBuildInfoBuilderStateFileInfo = Omit<BuilderStateFileInfo, "signature"> & {
         /**
          * Signature is
          * - undefined if FileInfo.version === FileInfo.signature
