@@ -5,6 +5,7 @@
         "target": "es2018",
         "moduleResolution": "classic",
         "rootDir": ".",
+        "outDir": "build",
 
         "declaration": true,
         "declarationMap": true,

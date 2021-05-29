@@ -1,4 +1,3 @@
-
 /**
  * Type of objects whose values are all of the same type.
  * The `in` and `for-in` operators can *not* be safely used,
@@ -9,12 +8,11 @@ export interface MapLike<T> {
 }
 
 
-
-    /** Represents a "prefix*suffix" pattern. */
-    export interface Pattern {
-        prefix: string;
-        suffix: string;
-    }
+/** Represents a "prefix*suffix" pattern. */
+export interface Pattern {
+    prefix: string;
+    suffix: string;
+}
 
 export interface MultiMap<K, V> extends ESMap<K, V[]> {
     /**
@@ -8554,53 +8552,53 @@ export interface PseudoBigInt {
 }
 
 
-    export const enum BuilderFileEmit {
-        DtsOnly,
-        Full
-    }
+export const enum BuilderFileEmit {
+    DtsOnly,
+    Full
+}
 
-    export const enum PrivateIdentifierKind {
-        Field = "f",
-        Method = "m",
-        Accessor = "a"
-    }
+export const enum PrivateIdentifierKind {
+    Field = "f",
+    Method = "m",
+    Accessor = "a"
+}
 
 
 export interface EmitHelperFactory {
-        getUnscopedHelperName(name: string): Identifier;
-        // TypeScript Helpers
-        createDecorateHelper(decoratorExpressions: readonly Expression[], target: Expression, memberName?: Expression, descriptor?: Expression): Expression;
-        createMetadataHelper(metadataKey: string, metadataValue: Expression): Expression;
-        createParamHelper(expression: Expression, parameterOffset: number): Expression;
-        // ES2018 Helpers
-        createAssignHelper(attributesSegments: readonly Expression[]): Expression;
-        createAwaitHelper(expression: Expression): Expression;
-        createAsyncGeneratorHelper(generatorFunc: FunctionExpression, hasLexicalThis: boolean): Expression;
-        createAsyncDelegatorHelper(expression: Expression): Expression;
-        createAsyncValuesHelper(expression: Expression): Expression;
-        // ES2018 Destructuring Helpers
-        createRestHelper(value: Expression, elements: readonly BindingOrAssignmentElement[], computedTempVariables: readonly Expression[] | undefined, location: TextRange): Expression;
-        // ES2017 Helpers
-        createAwaiterHelper(hasLexicalThis: boolean, hasLexicalArguments: boolean, promiseConstructor: EntityName | Expression | undefined, body: Block): Expression;
-        // ES2015 Helpers
-        createExtendsHelper(name: Identifier): Expression;
-        createTemplateObjectHelper(cooked: ArrayLiteralExpression, raw: ArrayLiteralExpression): Expression;
-        createSpreadArrayHelper(to: Expression, from: Expression): Expression;
-        // ES2015 Destructuring Helpers
-        createValuesHelper(expression: Expression): Expression;
-        createReadHelper(iteratorRecord: Expression, count: number | undefined): Expression;
-        // ES2015 Generator Helpers
-        createGeneratorHelper(body: FunctionExpression): Expression;
-        // ES Module Helpers
-        createCreateBindingHelper(module: Expression, inputName: Expression, outputName: Expression | undefined): Expression;
-        createImportStarHelper(expression: Expression): Expression;
-        createImportStarCallbackHelper(): Expression;
-        createImportDefaultHelper(expression: Expression): Expression;
-        createExportStarHelper(moduleExpression: Expression, exportsExpression?: Expression): Expression;
-        // Class Fields Helpers
-        createClassPrivateFieldGetHelper(receiver: Expression, state: Identifier, kind: PrivateIdentifierKind, f: Identifier | undefined): Expression;
-        createClassPrivateFieldSetHelper(receiver: Expression, state: Identifier, value: Expression, kind: PrivateIdentifierKind, f: Identifier | undefined): Expression;
-    }
+    getUnscopedHelperName(name: string): Identifier;
+    // TypeScript Helpers
+    createDecorateHelper(decoratorExpressions: readonly Expression[], target: Expression, memberName?: Expression, descriptor?: Expression): Expression;
+    createMetadataHelper(metadataKey: string, metadataValue: Expression): Expression;
+    createParamHelper(expression: Expression, parameterOffset: number): Expression;
+    // ES2018 Helpers
+    createAssignHelper(attributesSegments: readonly Expression[]): Expression;
+    createAwaitHelper(expression: Expression): Expression;
+    createAsyncGeneratorHelper(generatorFunc: FunctionExpression, hasLexicalThis: boolean): Expression;
+    createAsyncDelegatorHelper(expression: Expression): Expression;
+    createAsyncValuesHelper(expression: Expression): Expression;
+    // ES2018 Destructuring Helpers
+    createRestHelper(value: Expression, elements: readonly BindingOrAssignmentElement[], computedTempVariables: readonly Expression[] | undefined, location: TextRange): Expression;
+    // ES2017 Helpers
+    createAwaiterHelper(hasLexicalThis: boolean, hasLexicalArguments: boolean, promiseConstructor: EntityName | Expression | undefined, body: Block): Expression;
+    // ES2015 Helpers
+    createExtendsHelper(name: Identifier): Expression;
+    createTemplateObjectHelper(cooked: ArrayLiteralExpression, raw: ArrayLiteralExpression): Expression;
+    createSpreadArrayHelper(to: Expression, from: Expression): Expression;
+    // ES2015 Destructuring Helpers
+    createValuesHelper(expression: Expression): Expression;
+    createReadHelper(iteratorRecord: Expression, count: number | undefined): Expression;
+    // ES2015 Generator Helpers
+    createGeneratorHelper(body: FunctionExpression): Expression;
+    // ES Module Helpers
+    createCreateBindingHelper(module: Expression, inputName: Expression, outputName: Expression | undefined): Expression;
+    createImportStarHelper(expression: Expression): Expression;
+    createImportStarCallbackHelper(): Expression;
+    createImportDefaultHelper(expression: Expression): Expression;
+    createExportStarHelper(moduleExpression: Expression, exportsExpression?: Expression): Expression;
+    // Class Fields Helpers
+    createClassPrivateFieldGetHelper(receiver: Expression, state: Identifier, kind: PrivateIdentifierKind, f: Identifier | undefined): Expression;
+    createClassPrivateFieldSetHelper(receiver: Expression, state: Identifier, value: Expression, kind: PrivateIdentifierKind, f: Identifier | undefined): Expression;
+}
 
 /**
 </file /src/compiler/types.ts>
@@ -8609,93 +8607,93 @@ export interface EmitHelperFactory {
 
 
 
-    /* @internal */
-    export interface OptionsNameMap {
-        optionsNameMap: ESMap<string, CommandLineOption>;
-        shortOptionNames: ESMap<string, string>;
-    }
+/* @internal */
+export interface OptionsNameMap {
+    optionsNameMap: ESMap<string, CommandLineOption>;
+    shortOptionNames: ESMap<string, string>;
+}
 
-    interface BuilderStateFileInfo {
-        readonly version: string;
-        signature: string | undefined;
-        affectsGlobalScope: boolean | undefined;
-    }
+interface BuilderStateFileInfo {
+    readonly version: string;
+    signature: string | undefined;
+    affectsGlobalScope: boolean | undefined;
+}
 
-    export type ProgramBuildInfoDiagnostic = number | [fileId: number, diagnostics: readonly ReusableDiagnostic[]];
-    export type ProgramBuilderInfoFilePendingEmit = [fileId: number, emitKind: BuilderFileEmit];
-    export type ProgramBuildInfoReferencedMap = [fileId: number, fileIdListId: number][];
-    export type ProgramBuildInfoBuilderStateFileInfo = Omit<BuilderStateFileInfo, "signature"> & {
-        /**
-         * Signature is
-         * - undefined if FileInfo.version === FileInfo.signature
-         * - false if FileInfo has signature as undefined (not calculated)
-         * - string actual signature
-         */
-        signature: string | false | undefined;
-    };
+export type ProgramBuildInfoDiagnostic = number | [fileId: number, diagnostics: readonly ReusableDiagnostic[]];
+export type ProgramBuilderInfoFilePendingEmit = [fileId: number, emitKind: BuilderFileEmit];
+export type ProgramBuildInfoReferencedMap = [fileId: number, fileIdListId: number][];
+export type ProgramBuildInfoBuilderStateFileInfo = Omit<BuilderStateFileInfo, "signature"> & {
     /**
-     * ProgramBuildInfoFileInfo is string if FileInfo.version === FileInfo.signature && !FileInfo.affectsGlobalScope otherwise encoded FileInfo
+     * Signature is
+     * - undefined if FileInfo.version === FileInfo.signature
+     * - false if FileInfo has signature as undefined (not calculated)
+     * - string actual signature
      */
-    export type ProgramBuildInfoFileInfo = string | ProgramBuildInfoBuilderStateFileInfo;
-    export interface ProgramBuildInfo {
-        fileNames: readonly string[];
-        fileInfos: readonly ProgramBuildInfoFileInfo[];
-        options: CompilerOptions | undefined;
-        fileIdsList?: readonly (readonly number[])[];
-        referencedMap?: ProgramBuildInfoReferencedMap;
-        exportedModulesMap?: ProgramBuildInfoReferencedMap;
-        semanticDiagnosticsPerFile?: ProgramBuildInfoDiagnostic[];
-        affectedFilesPendingEmit?: ProgramBuilderInfoFilePendingEmit[];
-    }
+    signature: string | false | undefined;
+};
+/**
+ * ProgramBuildInfoFileInfo is string if FileInfo.version === FileInfo.signature && !FileInfo.affectsGlobalScope otherwise encoded FileInfo
+ */
+export type ProgramBuildInfoFileInfo = string | ProgramBuildInfoBuilderStateFileInfo;
+export interface ProgramBuildInfo {
+    fileNames: readonly string[];
+    fileInfos: readonly ProgramBuildInfoFileInfo[];
+    options: CompilerOptions | undefined;
+    fileIdsList?: readonly (readonly number[])[];
+    referencedMap?: ProgramBuildInfoReferencedMap;
+    exportedModulesMap?: ProgramBuildInfoReferencedMap;
+    semanticDiagnosticsPerFile?: ProgramBuildInfoDiagnostic[];
+    affectedFilesPendingEmit?: ProgramBuilderInfoFilePendingEmit[];
+}
 
 
-    export type StrictOptionName =
-        | "noImplicitAny"
-        | "noImplicitThis"
-        | "strictNullChecks"
-        | "strictFunctionTypes"
-        | "strictBindCallApply"
-        | "strictPropertyInitialization"
-        | "alwaysStrict"
-        ;
+export type StrictOptionName =
+    | "noImplicitAny"
+    | "noImplicitThis"
+    | "strictNullChecks"
+    | "strictFunctionTypes"
+    | "strictBindCallApply"
+    | "strictPropertyInitialization"
+    | "alwaysStrict"
+    ;
 
 
-    export interface SymlinkedDirectory {
-        real: string;
-        realPath: Path;
-    }
+export interface SymlinkedDirectory {
+    real: string;
+    realPath: Path;
+}
 
-    export interface SymlinkCache {
-        /** Gets a map from symlink to realpath. Keys have trailing directory separators. */
-        getSymlinkedDirectories(): ReadonlyESMap<Path, SymlinkedDirectory | false> | undefined;
-        /** Gets a map from realpath to symlinks. Keys have trailing directory separators. */
-        getSymlinkedDirectoriesByRealpath(): MultiMap<Path, string> | undefined;
-        /** Gets a map from symlink to realpath */
-        getSymlinkedFiles(): ReadonlyESMap<Path, string> | undefined;
-        setSymlinkedDirectory(symlink: string, real: SymlinkedDirectory | false): void;
-        setSymlinkedFile(symlinkPath: Path, real: string): void;
-        /*@internal*/
-        setSymlinkedDirectoryFromSymlinkedFile(symlink: string, real: string): void;
-    }
+export interface SymlinkCache {
+    /** Gets a map from symlink to realpath. Keys have trailing directory separators. */
+    getSymlinkedDirectories(): ReadonlyESMap<Path, SymlinkedDirectory | false> | undefined;
+    /** Gets a map from realpath to symlinks. Keys have trailing directory separators. */
+    getSymlinkedDirectoriesByRealpath(): MultiMap<Path, string> | undefined;
+    /** Gets a map from symlink to realpath */
+    getSymlinkedFiles(): ReadonlyESMap<Path, string> | undefined;
+    setSymlinkedDirectory(symlink: string, real: SymlinkedDirectory | false): void;
+    setSymlinkedFile(symlinkPath: Path, real: string): void;
+    /*@internal*/
+    setSymlinkedDirectoryFromSymlinkedFile(symlink: string, real: string): void;
+}
 
 
-    
-    export interface ReusableDiagnostic extends ReusableDiagnosticRelatedInformation {
-        /** May store more in future. For now, this will simply be `true` to indicate when a diagnostic is an unused-identifier diagnostic. */
-        reportsUnnecessary?: {};
-        reportDeprecated?: {}
-        source?: string;
-        relatedInformation?: ReusableDiagnosticRelatedInformation[];
-        skippedOn?: keyof CompilerOptions;
-    }
 
-    export interface ReusableDiagnosticRelatedInformation {
-        category: DiagnosticCategory;
-        code: number;
-        file: string | undefined;
-        start: number | undefined;
-        length: number | undefined;
-        messageText: string | ReusableDiagnosticMessageChain;
-    }
+export interface ReusableDiagnostic extends ReusableDiagnosticRelatedInformation {
+    /** May store more in future. For now, this will simply be `true` to indicate when a diagnostic is an unused-identifier diagnostic. */
+    reportsUnnecessary?: {};
+    reportDeprecated?: {}
+    source?: string;
+    relatedInformation?: ReusableDiagnosticRelatedInformation[];
+    skippedOn?: keyof CompilerOptions;
+}
 
-    export type ReusableDiagnosticMessageChain = DiagnosticMessageChain;
+export interface ReusableDiagnosticRelatedInformation {
+    category: DiagnosticCategory;
+    code: number;
+    file: string | undefined;
+    start: number | undefined;
+    length: number | undefined;
+    messageText: string | ReusableDiagnosticMessageChain;
+}
+
+export type ReusableDiagnosticMessageChain = DiagnosticMessageChain;
