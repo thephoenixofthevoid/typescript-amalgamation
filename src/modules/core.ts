@@ -1,4 +1,8 @@
-import { MapLike, ReadonlyESMap, ESMap, Comparer, Comparison, Push } from "./types";
+import { MapLike, ReadonlyESMap, ESMap, Comparer, Comparison, Push, EqualityComparer } from "./types";
+
+export function equateValues<T>(a: T, b: T) {
+    return a === b;
+}
 
 /**
  * Gets the actual offset into an array for a relative offset. Negative offsets indicate a
@@ -190,6 +194,59 @@ export function arrayReverseIterator<T>(array: readonly T[]): Iterator<T> {
  */
 export function getProperty<T>(map: MapLike<T>, key: string): T | undefined {
     return Object.prototype.hasOwnProperty.call(map, key) ? map[key] : undefined;
+}
+
+/**
+ * Gets the owned, enumerable property keys of a map-like.
+ */
+export function getOwnKeys<T>(map: MapLike<T>): string[] {
+    const keys: string[] = [];
+    for (const key in map) {
+        if (Object.prototype.hasOwnProperty.call(map, key)) {
+            keys.push(key);
+        }
+    }
+
+    return keys;
+}
+
+
+
+/**
+ * @return Whether the value was added.
+ */
+ export function pushIfUnique<T>(array: T[], toAdd: T, equalityComparer?: EqualityComparer<T>): boolean {
+    if (contains(array, toAdd, equalityComparer)) {
+       return false;
+    }
+    else {
+        array.push(toAdd);
+        return true;
+    }
+}
+
+
+
+export function contains<T>(array: readonly T[] | undefined, value: T, equalityComparer: EqualityComparer<T> = equateValues): boolean {
+    if (array) {
+        for (const v of array) {
+            if (equalityComparer(v, value)) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+export function getAllKeys(obj: object): string[] {
+    const result: string[] = [];
+    do {
+        const names = Object.getOwnPropertyNames(obj);
+        for (const name of names) {
+            pushIfUnique(result, name);
+        }
+    } while (obj = Object.getPrototypeOf(obj));
+    return result;
 }
 
 
@@ -420,4 +477,49 @@ export function takeWhile<T>(array: readonly T[], predicate: (element: T) => boo
             });
             return result;
         }
+    }
+
+    
+
+    /**
+     * Like `forEach`, but iterates in reverse order.
+     */
+     export function forEachRight<T, U>(array: readonly T[] | undefined, callback: (element: T, index: number) => U | undefined): U | undefined {
+        if (array) {
+            for (let i = array.length - 1; i >= 0; i--) {
+                const result = callback(array[i], i);
+                if (result) {
+                    return result;
+                }
+            }
+        }
+        return undefined;
+    }
+
+    export function singleIterator<T>(value: T): Iterator<T> {
+        let done = false;
+        return {
+            next() {
+                const wasDone = done;
+                done = true;
+                return wasDone ? { value: undefined as never, done: true } : { value, done: false };
+            }
+        };
+    }
+
+    
+
+    export function mapEntries<K1, V1, K2, V2>(map: ReadonlyESMap<K1, V1>, f: (key: K1, value: V1) => readonly [K2, V2]): ESMap<K2, V2>;
+    export function mapEntries<K1, V1, K2, V2>(map: ReadonlyESMap<K1, V1> | undefined, f: (key: K1, value: V1) => readonly [K2, V2]): ESMap<K2, V2> | undefined;
+    export function mapEntries<K1, V1, K2, V2>(map: ReadonlyESMap<K1, V1> | undefined, f: (key: K1, value: V1) => readonly [K2, V2]): ESMap<K2, V2> | undefined {
+        if (!map) {
+            return undefined;
+        }
+
+        const result = new Map<K2, V2>();
+        map.forEach((value, key) => {
+            const [newKey, newValue] = f(key, value);
+            result.set(newKey, newValue);
+        });
+        return result;
     }
