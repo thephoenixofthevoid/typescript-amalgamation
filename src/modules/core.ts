@@ -1,5 +1,25 @@
 import { MapLike, ReadonlyESMap, ESMap, Comparer, Comparison, Push, EqualityComparer } from "./types";
 
+
+
+    /** Does nothing. */
+    export function noop(_?: {} | null | undefined): void { }
+
+    /** Do nothing and return false */
+    export function returnFalse(): false { return false; }
+
+    /** Do nothing and return true */
+    export function returnTrue(): true { return true; }
+
+    /** Do nothing and return undefined */
+    export function returnUndefined(): undefined { return undefined; }
+
+    /** Returns its argument. */
+    export function identity<T>(x: T) { return x; }
+
+    /** Returns lower case string */
+    export function toLowerCase(x: string) { return x.toLowerCase(); }
+
 export function equateValues<T>(a: T, b: T) {
     return a === b;
 }
@@ -523,3 +543,15 @@ export function takeWhile<T>(array: readonly T[], predicate: (element: T) => boo
         });
         return result;
     }
+
+
+
+export function arrayToNumericMap<T>(array: readonly T[], makeKey: (value: T) => number): T[];
+export function arrayToNumericMap<T, U>(array: readonly T[], makeKey: (value: T) => number, makeValue: (value: T) => U): U[];
+export function arrayToNumericMap<T, U>(array: readonly T[], makeKey: (value: T) => number, makeValue: (value: T) => T | U = identity): (T | U)[] {
+    const result: (T | U)[] = [];
+    for (const value of array) {
+        result[makeKey(value)] = makeValue(value);
+    }
+    return result;
+}
