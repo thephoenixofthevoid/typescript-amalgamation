@@ -44,3 +44,42 @@ export function elementAt<T>(array: readonly T[] | undefined, offset: number): T
     }
     return undefined;
 }
+
+/**
+ * Creates a new array with `element` interspersed in between each element of `input`
+ * if there is more than 1 value in `input`. Otherwise, returns the existing array.
+ */
+export function intersperse<T>(input: T[], element: T): T[] {
+    if (input.length <= 1) {
+        return input;
+    }
+    const result: T[] = [];
+    for (let i = 0, n = input.length; i < n; i++) {
+        if (i) result.push(element);
+        result.push(input[i]);
+    }
+    return result;
+}
+
+export function zipWith<T, U, V>(arrayA: readonly T[], arrayB: readonly U[], callback: (a: T, b: U, index: number) => V): V[] {
+    const result: V[] = [];
+    //Debug.assertEqual(arrayA.length, arrayB.length);
+    for (let i = 0; i < arrayA.length; i++) {
+        result.push(callback(arrayA[i], arrayB[i], i));
+    }
+    return result;
+}
+
+export function zipToIterator<T, U>(arrayA: readonly T[], arrayB: readonly U[]): Iterator<[T, U]> {
+    //Debug.assertEqual(arrayA.length, arrayB.length);
+    let i = 0;
+    return {
+        next() {
+            if (i === arrayA.length) {
+                return { value: undefined as never, done: true };
+            }
+            i++;
+            return { value: [arrayA[i - 1], arrayB[i - 1]] as [T, U], done: false };
+        }
+    };
+}
