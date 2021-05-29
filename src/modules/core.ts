@@ -1,3 +1,5 @@
+import { MapLike } from "./types";
+
 /**
  * Gets the actual offset into an array for a relative offset. Negative offsets indicate a
  * position offset from the end of the array.
@@ -82,4 +84,97 @@ export function zipToIterator<T, U>(arrayA: readonly T[], arrayB: readonly U[]):
             return { value: [arrayA[i - 1], arrayB[i - 1]] as [T, U], done: false };
         }
     };
+}
+
+/**
+ * Returns the first truthy result of `callback`, or else fails.
+ * This is like `forEach`, but never returns undefined.
+ */
+export function findMap<T, U>(array: readonly T[], callback: (element: T, index: number) => U | undefined): U {
+    for (let i = 0; i < array.length; i++) {
+        const result = callback(array[i], i);
+        if (result) {
+            return result;
+        }
+    }
+    throw new Error("Failed")
+    //return Debug.fail();
+}
+
+// export function flatMapIterator<T, U>(iter: Iterator<T>, mapfn: (x: T) => readonly U[] | Iterator<U> | undefined): Iterator<U> {
+//     const first = iter.next();
+//     if (first.done) {
+//         return emptyIterator;
+//     }
+//     let currentIter = getIterator(first.value);
+//     return {
+//         next() {
+//             while (true) {
+//                 const currentRes = currentIter.next();
+//                 if (!currentRes.done) {
+//                     return currentRes;
+//                 }
+//                 const iterRes = iter.next();
+//                 if (iterRes.done) {
+//                     return iterRes as { done: true, value: never };
+//                 }
+//                 currentIter = getIterator(iterRes.value);
+//             }
+//         },
+//     };
+
+//     function getIterator(x: T): Iterator<U> {
+//         const res = mapfn(x);
+//         return res === undefined ? emptyIterator : isArray(res) ? arrayIterator(res) : res;
+//     }
+// }
+
+export function mapAllOrFail<T, U>(array: readonly T[], mapFn: (x: T, i: number) => U | undefined): U[] | undefined {
+    const result: U[] = [];
+    for (let i = 0; i < array.length; i++) {
+        const mapped = mapFn(array[i], i);
+        if (mapped === undefined) {
+            return undefined;
+        }
+        result.push(mapped);
+    }
+    return result;
+}
+
+export function arrayIterator<T>(array: readonly T[]): Iterator<T> {
+    let i = 0;
+    return { next: () => {
+        if (i === array.length) {
+            return { value: undefined as never, done: true };
+        }
+        else {
+            i++;
+            return { value: array[i - 1], done: false };
+        }
+    }};
+}
+
+export function arrayReverseIterator<T>(array: readonly T[]): Iterator<T> {
+    let i = array.length;
+    return {
+        next: () => {
+            if (i === 0) {
+                return { value: undefined as never, done: true };
+            }
+            else {
+                i--;
+                return { value: array[i], done: false };
+            }
+        }
+    };
+}
+
+/**
+ * Gets the value of an owned property in a map-like.
+ *
+ * @param map A map-like.
+ * @param key A property key.
+ */
+export function getProperty<T>(map: MapLike<T>, key: string): T | undefined {
+    return Object.prototype.hasOwnProperty.call(map, key) ? map[key] : undefined;
 }
