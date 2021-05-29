@@ -555,3 +555,52 @@ export function arrayToNumericMap<T, U>(array: readonly T[], makeKey: (value: T)
     }
     return result;
 }
+
+// const _entries = Object.entries || (<T>(obj: MapLike<T>) => {
+//     const keys = getOwnKeys(obj);
+//     const result: [string, T][] = Array(keys.length);
+//     for (let i = 0; i < keys.length; i++) {
+//         result[i] = [keys[i], obj[keys[i]]];
+//     }
+//     return result;
+// });
+
+
+
+// export function assign<T extends object>(t: T, ...args: (T | undefined)[]) {
+//     for (const arg of args) {
+//         if (arg === undefined) continue;
+//         for (const p in arg) {
+//             if (hasProperty(arg, p)) {
+//                 t[p] = arg[p];
+//             }
+//         }
+//     }
+//     return t;
+// }
+
+
+
+
+
+    /**
+     * Returns string left-padded with spaces or zeros until it reaches the given length.
+     *
+     * @param s String to pad.
+     * @param length Final padded length. If less than or equal to 's.length', returns 's' unchanged.
+     * @param padString Character to use as padding (default " ").
+     */
+     export function padLeft(s: string, length: number, padString: " " | "0" = " ") {
+        return length <= s.length ? s : padString.repeat(length - s.length) + s;
+    }
+
+    /**
+     * Returns string right-padded with spaces until it reaches the given length.
+     *
+     * @param s String to pad.
+     * @param length Final padded length. If less than or equal to 's.length', returns 's' unchanged.
+     * @param padString Character to use as padding (default " ").
+     */
+    export function padRight(s: string, length: number, padString: " " = " ") {
+        return length <= s.length ? s : s + padString.repeat(length - s.length);
+    }
