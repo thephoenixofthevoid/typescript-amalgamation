@@ -1,0 +1,2 @@
+tsc
+npx rollup build/src/typescript.amalgamation.js > tsc.js
