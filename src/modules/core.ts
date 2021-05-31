@@ -94,7 +94,7 @@ export function intersperse<T>(input: T[], element: T): T[] {
 
 export function zipWith<T, U, V>(arrayA: readonly T[], arrayB: readonly U[], callback: (a: T, b: U, index: number) => V): V[] {
     const result: V[] = [];
-    //Debug.assertEqual(arrayA.length, arrayB.length);
+    Debug.assertEqual(arrayA.length, arrayB.length);
     for (let i = 0; i < arrayA.length; i++) {
         result.push(callback(arrayA[i], arrayB[i], i));
     }
@@ -102,7 +102,7 @@ export function zipWith<T, U, V>(arrayA: readonly T[], arrayB: readonly U[], cal
 }
 
 export function zipToIterator<T, U>(arrayA: readonly T[], arrayB: readonly U[]): Iterator<[T, U]> {
-    //Debug.assertEqual(arrayA.length, arrayB.length);
+    Debug.assertEqual(arrayA.length, arrayB.length);
     let i = 0;
     return {
         next() {
@@ -412,7 +412,7 @@ export function getSpellingSuggestion<T>(name: string, candidates: T[], getName:
                 continue;
             }
 
-            // Debug.assert(distance < bestDistance); // Else `levenshteinWithMax` should return undefined
+            Debug.assert(distance < bestDistance); // Else `levenshteinWithMax` should return undefined
             bestDistance = distance;
             bestCandidate = candidate;
         }
@@ -836,7 +836,7 @@ export function mapIterator<T, U>(iter: Iterator<T>, mapFn: (x: T) => U): Iterat
     }
 
     export function zipToMap<K, V>(keys: readonly K[], values: readonly V[]): ESMap<K, V> {
-        //Debug.assert(keys.length === values.length);
+        Debug.assert(keys.length === values.length);
         const map = new Map<K, V>();
         for (let i = 0; i < keys.length; ++i) {
             map.set(keys[i], values[i]);
@@ -1442,7 +1442,7 @@ export function mapIterator<T, U>(iter: Iterator<T>, mapFn: (x: T) => U): Iterat
     }
 
     export function last<T>(array: readonly T[]): T {
-         //Debug.assert(array.length !== 0);
+         Debug.assert(array.length !== 0);
          return array[array.length - 1];
     }
 
@@ -2092,7 +2092,7 @@ export function mapIterator<T, U>(iter: Iterator<T>, mapFn: (x: T) => U): Iterat
      * E.g.: matchedText(tryParsePattern("foo*baz"), "foobarbaz") === "bar"
      */
     export function matchedText(pattern: Pattern, candidate: string): string {
-        //Debug.assert(isPatternMatch(pattern, candidate));
+        Debug.assert(isPatternMatch(pattern, candidate));
         return candidate.substring(pattern.prefix.length, candidate.length - pattern.suffix.length);
     }
 
