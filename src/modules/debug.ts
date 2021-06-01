@@ -1,5 +1,6 @@
 import { AnyFunction } from "./core";
 
+
 export function fail(message?: string, stackCrawlMark?: AnyFunction): never {
     debugger;
     const e = new Error(message ? `Debug Failure. ${message}` : "Debug Failure.");
@@ -57,3 +58,12 @@ export function assertIsDefined<T>(value: T, message?: string, stackCrawlMark?: 
         fail(message, stackCrawlMark || assertIsDefined);
     }
 }
+
+
+
+export function assertNever(member: never, message = "Illegal value:", stackCrawlMark?: AnyFunction): never {
+    const detail = "No" //typeof member === "object" && hasProperty(member, "kind") && hasProperty(member, "pos") && formatSyntaxKind ? "SyntaxKind: " + formatSyntaxKind((member as Node).kind) : JSON.stringify(member);
+    return fail(`${message} ${detail}`, stackCrawlMark || assertNever);
+}
+
+
