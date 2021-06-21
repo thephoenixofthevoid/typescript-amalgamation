@@ -61,7 +61,8 @@ export function assertIsDefined<T>(value: T, message?: string, stackCrawlMark?: 
 
 
 
-export function assertNever(member: never, message = "Illegal value:", stackCrawlMark?: AnyFunction): never {
+
+export function assertNever(_member: never, message = "Illegal value:", stackCrawlMark?: AnyFunction): never {
     const detail = "No" //typeof member === "object" && hasProperty(member, "kind") && hasProperty(member, "pos") && formatSyntaxKind ? "SyntaxKind: " + formatSyntaxKind((member as Node).kind) : JSON.stringify(member);
     return fail(`${message} ${detail}`, stackCrawlMark || assertNever);
 }
